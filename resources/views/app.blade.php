@@ -11,9 +11,11 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
+        @inertiaHead
     </head>
     <body>
-  <nav class="navbar navbar-expand-lg navbar-laravelflow">
+        @inertia
+  <!-- <nav class="navbar navbar-expand-lg navbar-laravelflow">
     <div class="container">
       <a class="navbar-brand" href="/"><strong>Stackoverflow</strong>Clone</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -288,6 +290,6 @@
         </div>
       </div>
     </div>
-  </main>
+  </main> -->
 </body>
 </html>
