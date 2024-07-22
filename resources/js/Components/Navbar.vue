@@ -1,12 +1,16 @@
 <script setup>
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, usePage, router } from "@inertiajs/vue3";
 import { computed } from "vue";
 
 const page = usePage()
 
 const userName = computed(() => page.props.user.name)
 
-const isLoggedIn = computed(() => page.props.user)
+const isLoggedIn = computed(() => !!page.props.user)
+
+const logout = () => {
+    router.post(route('logout'))
+}
 </script>
 
 <template>
@@ -38,7 +42,7 @@ const isLoggedIn = computed(() => page.props.user)
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item" href="#" @click.prevent="logout">Logout</a></li>
                         </ul>
                     </li>
                     <li class="nav-item" v-else>
