@@ -8,7 +8,11 @@
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
-                            <QuestionSummary v-for="question in questions.data" :key="question.id" :question="question" />
+                            <QuestionSummary 
+                                v-for="question in questions.data" 
+                                :key="question.id" :question="question" 
+                                @edit="editQuestion"
+                            />
                         </ul>
                     </div>
 
@@ -16,7 +20,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="d-grid">
-                        <button class="btn btn-primary" @click="showModal">Ask
+                        <button class="btn btn-primary" @click="askQuestion">Ask
                             Question</button>
                     </div>
 
@@ -49,8 +53,12 @@
                 </div>
             </div>
         </div>
-        <Modal id="question-modal" title="Ask Question" size="large" scrollable>
-            <QuestionForm @success="hideModal" />
+        <Modal id="question-modal" :title="state.modalTitle" size="large" scrollable @hidden="editing = false">
+            <component 
+                :is="editing ? EditQuestionForm : CreateQuestionForm" 
+                :question="question" 
+                @success="hideModal"
+            />
         </Modal>
     </AppLayout>
     <!-- <h1>Welcome!</h1>
@@ -65,14 +73,15 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import * as bootstrap from 'bootstrap';
 import { Link, Head } from "@inertiajs/vue3";
 import AppLayout from "../../Layouts/AppLayout.vue";
 import QuestionSummary from "../../Components/Question/QuestionSummary.vue";
 import Pagination from "../../Components/Pagination.vue";
 import Modal from '../../Components/Modal.vue';
-import QuestionForm from "../../Components/Question/QuestionForm.vue";
+import CreateQuestionForm from "../../Components/Question/CreateQuestionForm.vue";
+import EditQuestionForm from "../../Components/Question/EditQuestionForm.vue";
 
 defineProps({
     questions: {
@@ -82,8 +91,17 @@ defineProps({
 })
 
 const state = reactive({
-    modalRef: null
+    modalRef: null,
+    modalTitle: "Ask Question"
 })
+
+const question = reactive({
+    id: null,
+    title: null,
+    body: null
+})
+
+const editing = ref(false)
 
 onMounted(() => {
     state.modalRef = new bootstrap.Modal('#question-modal', {
@@ -95,4 +113,21 @@ onMounted(() => {
 const showModal = () => state.modalRef.show();
 
 const hideModal = () => state.modalRef.hide();
+
+const editQuestion = (payload) => {
+    editing.value = true
+    state.modalTitle = "Edit Question"
+
+    question.id = payload.id
+    question.title = payload.title
+    question.body = payload.body
+
+    showModal()
+}
+
+const askQuestion = () => {
+    editing.value = false
+    state.modalTitle = "Ask Question"
+    showModal()
+}
 </script>
