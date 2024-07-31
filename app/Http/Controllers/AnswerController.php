@@ -66,8 +66,10 @@ class AnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Answer $answer)
+    public function destroy(Question $question, Answer $answer)
     {
-        //
+        $answer->delete();
+
+        return back()->with('success', 'Your answer deleted successfully.');
     }
 }
