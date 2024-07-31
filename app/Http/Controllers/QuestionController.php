@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\QuestionResource;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Resources\AnswerResource;
 
 class QuestionController extends Controller
 {
@@ -57,7 +58,10 @@ class QuestionController extends Controller
     public function show(Question $question)
     {
         return inertia('Questions/Show', [
-            'question' => QuestionResource::make($question)
+            'question' => QuestionResource::make($question),
+            'answers' => AnswerResource::collection(
+                $question->answers()->latest()->paginate(5)
+            )
         ]);
     }
 
