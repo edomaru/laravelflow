@@ -19,11 +19,19 @@ class QuestionController extends Controller
         $filter = $request->query('filter', 'latest');
         $questions = QuestionResource::collection(
             Question::with('user')
+                ->withCount('answers')
                 ->when($filter === 'mine', function ($query) {
                     $query->mine();
                 })
+                ->when($filter === 'unanswered', function ($query) {
+                    $query->has('answers', '=', 0);
+                })
+                ->when($filter === 'scored', function ($query) {
+                    $query->whereNotNull('best_answer_id');
+                })
                 ->latest()
                 ->paginate(15)
+                ->withQueryString()
         );
     
         return inertia('Questions/Index', [
