@@ -10,6 +10,8 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['edit', 'remove'])
+
 const removeAnswer = () => {
     if (confirm("Are you sure?")) {
         router.delete(route('questions.answers.destroy', [props.answer.question_id, props.answer.id]), {
@@ -61,7 +63,7 @@ const removeAnswer = () => {
             <div class="d-flex justify-content-end mb-2">
                 <Author :user="answer.user" :post-at="answer.created_at" is-answer />
             </div>
-            <ActionButtons @remove="removeAnswer" />
+            <ActionButtons @remove="removeAnswer" @edit="emit('edit', answer)" />
         </div>
     </div>
 </template>
