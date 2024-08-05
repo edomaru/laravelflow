@@ -44,7 +44,8 @@ const emit = defineEmits(['edit', 'remove'])
                     </div>
                 </div>
                 <ActionButtons 
-                    v-if="$page.props.user && $page.props.user.id === question.user.id"
+                    :allow-updated="question.can_be.updated"
+                    :allow-deleted="question.can_be.deleted"
                     @edit="emit('edit', question)" @remove="emit('remove', question)" 
                 />
             </div>

@@ -8,6 +8,7 @@ use App\Http\Resources\QuestionResource;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Resources\AnswerResource;
+use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
@@ -86,6 +87,8 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
+        Gate::authorize('update', $question);
+
         $question->update($request->validated());
 
         return back()->with('success', 'Your question updated successfully.');
@@ -96,6 +99,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        Gate::authorize('delete', $question);
+
         $question->delete();
 
         return back()->with('success', 'Your question deleted successfully.');
