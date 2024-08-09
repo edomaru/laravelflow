@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\BookmarkQuestionController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,5 +11,8 @@ Route::get('/questions/{question:slug}', [QuestionController::class, 'show'])->n
 Route::resource('/questions', QuestionController::class)
     ->except(['index', 'show'])
     ->middleware('auth');
+Route::post('/questions/{question}/bookmark', [BookmarkQuestionController::class, 'store'])->name('questions.bookmark.store')->middleware('auth');
+Route::delete('/questions/{question}/bookmark', [BookmarkQuestionController::class, 'destroy'])->name('questions.bookmark.destroy')->middleware('auth');
+
 Route::resource('/questions.answers', AnswerController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
 Route::post('/questions/answers/{answer}/accept', AcceptAnswerController::class)->name('questions.answers.accept')->middleware('auth');
