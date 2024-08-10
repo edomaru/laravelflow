@@ -43,6 +43,11 @@ class Question extends Model
         return $this->belongsToMany(User::class, 'bookmarks')->withTimestamps();
     }
 
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
+
     public function bookmarkedBy(?User $user): bool
     {
         if (!$user) {
