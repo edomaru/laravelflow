@@ -21,6 +21,11 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
+
     public function isBest()
     {
         return $this->id === $this->question->best_answer_id;
