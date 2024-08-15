@@ -1,4 +1,6 @@
 <script setup>
+import TagItem from './TagItem.vue';
+
 defineProps({
     tags: {
         type: Array,
@@ -9,6 +11,6 @@ defineProps({
 
 <template>
     <ul class="tags-inline">
-        <li v-for="tag in tags" :key="tag"><a href="#" class="tag">{{ tag }}</a></li>
+        <TagItem v-for="tag in tags" :key="tag" :tag="tag" />
     </ul>
 </template>
