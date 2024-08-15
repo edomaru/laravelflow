@@ -48,6 +48,11 @@ class Question extends Model
         return $this->morphToMany(User::class, 'votable');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function bookmarkedBy(?User $user): bool
     {
         if (!$user) {
