@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { Link } from "@inertiajs/vue3";
 import ActionButtons from "../ActionButtons.vue";
+import TagsInline from '../../Components/Tags/TagsInline.vue';
 
 const props = defineProps({
     question: {
@@ -44,11 +45,7 @@ const emit = defineEmits(['edit', 'remove'])
                 </div>
                 <div class="excerpt">{{ question.summary }}</div>
                 <div class="d-flex justify-content-between align-items-center mt-2">
-                    <ul class="tags-inline">
-                        <li><a href="#" class="tag">PHP</a></li>
-                        <li><a href="#" class="tag">Laravel</a></li>
-                        <li><a href="#" class="tag">OOP</a></li>
-                    </ul>
+                    <TagsInline :tags="question.tags" />
                     <div class="question-summary-author">
                         <a href="#" class="avatar-sm">
                             <img :src="question.user.avatar_url" size="16" alt="" srcset="">
