@@ -8,13 +8,15 @@ use App\Http\Resources\QuestionResource;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Resources\AnswerResource;
+use App\Http\Resources\RelatedQuestionResource;
+use App\Models\Tag;
 use App\Traits\RelatedTags;
 use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
     use RelatedTags;
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -76,6 +78,15 @@ class QuestionController extends Controller
             'question' => QuestionResource::make($question),
             'answers' => AnswerResource::collection(
                 $question->answers()->latest()->paginate(5)
+            ),
+            'tags' => Tag::take(20)->pluck('name'),
+            'related_questions' => RelatedQuestionResource::collection(
+                Question::with('tags')->whereNot('id', $question->id)
+                    ->whereHas('tags', function ($query) use ($question) {
+                        $query->whereIn('name', $question->tags->pluck('name'));
+                    })
+                    ->take(10)
+                    ->get()
             )
         ]);
     }

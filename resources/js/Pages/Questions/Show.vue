@@ -6,6 +6,8 @@ import Answers from '../../Components/Answer/Answers.vue';
 import CreateAnswer from '../../Components/Answer/CreateAnswer.vue';
 import Votable from "../../Components/Votable.vue";
 import TagsInline from '../../Components/Tags/TagsInline.vue';
+import TagsList from '../../Components/Tags/TagsList.vue';
+import RelatedQuestions from '../../Components/Question/RelatedQuestions.vue';
 import useVote from '../../Composables/useVote.js';
 
 const props = defineProps({
@@ -13,8 +15,16 @@ const props = defineProps({
         type: Object,
         required: true
     },
+    related_questions: {
+        type: Array,
+        required: true
+    },
     answers: {
         type: Object,
+        required: true
+    },
+    tags: {
+        type: Array,
         required: true
     }
 })
@@ -90,46 +100,10 @@ const { upVote, downVote } = useVote(props.question, 'questions.vote')
                 </div>
                 <div class="col-md-3">
                     <h3 class="fs-5 mb-3">Related</h3>
-                    <div class="related">
-                        <div class="related-item">
-                            <a href="#">
-                                <div class="answer-votes">5</div>
-                            </a>
-                            <a href="#">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestias,
-                                dignissimos!</a>
-                        </div>
-                        <div class="related-item">
-                            <a href="#">
-                                <div class="answer-votes">3</div>
-                            </a>
-                            <a href="#">Lorem ipsum dolor sit amet consectetur adipisicing.</a>
-                        </div>
-                        <div class="related-item">
-                            <a href="#">
-                                <div class="answer-votes answer-accepted">9</div>
-                            </a>
-                            <a href="#">Lorem ipsum dolor sit amet.</a>
-                        </div>
-                        <div class="related-item">
-                            <a href="#">
-                                <div class="answer-votes">7</div>
-                            </a>
-                            <a href="#">Lorem ipsum dolor sit amet.</a>
-                        </div>
-                    </div>
+                    <RelatedQuestions :questions="related_questions" />
 
                     <h3 class="fs-5 mt-5">Tags</h3>
-                    <ul class="tags-list mt-3">
-                        <li><a href="#" class="tag mb-2">Javascript</a></li>
-                        <li><a href="#" class="tag mb-2">JQuery</a></li>
-                        <li><a href="#" class="tag mb-2">Vue.js</a></li>
-                        <li><a href="#" class="tag mb-2">React.js</a></li>
-                        <li><a href="#" class="tag mb-2">Inertia.js</a></li>
-                        <li><a href="#" class="tag mb-2">PHP</a></li>
-                        <li><a href="#" class="tag mb-2">Laravel</a></li>
-                        <li><a href="#" class="tag mb-2">Bootstrap</a></li>
-                        <li><a href="#" class="tag mb-2">Tailwind</a></li>
-                    </ul>
+                    <TagsList :tags="tags" />
                 </div>
             </div>
         </div>
