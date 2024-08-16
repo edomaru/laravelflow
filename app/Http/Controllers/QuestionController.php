@@ -8,10 +8,13 @@ use App\Http\Resources\QuestionResource;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Resources\AnswerResource;
+use App\Traits\RelatedTags;
 use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
+    use RelatedTags;
+    
     /**
      * Display a listing of the resource.
      */
@@ -34,10 +37,13 @@ class QuestionController extends Controller
                 ->paginate(15)
                 ->withQueryString()
         );
+
+        $tags = $this->relatedTags($questions->items());
     
         return inertia('Questions/Index', [
             'questions' => $questions,
-            'filter' => $filter
+            'filter' => $filter,
+            'tags' => $tags
         ]);
     }
 

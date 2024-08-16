@@ -31,17 +31,7 @@
 
                     <QuestionFilter :filter="filter" />
                     <h2 class="fs-5 mt-5">Related Tags</h2>
-                    <ul class="tags-list mt-3">
-                        <li><a href="#" class="tag mb-2">Javascript</a></li>
-                        <li><a href="#" class="tag mb-2">JQuery</a></li>
-                        <li><a href="#" class="tag mb-2">Vue.js</a></li>
-                        <li><a href="#" class="tag mb-2">React.js</a></li>
-                        <li><a href="#" class="tag mb-2">Inertia.js</a></li>
-                        <li><a href="#" class="tag mb-2">PHP</a></li>
-                        <li><a href="#" class="tag mb-2">Laravel</a></li>
-                        <li><a href="#" class="tag mb-2">Bootstrap</a></li>
-                        <li><a href="#" class="tag mb-2">Tailwind</a></li>
-                    </ul>
+                    <TagsList :tags="tags" />
                 </div>
             </div>
         </div>
@@ -73,6 +63,7 @@ import Pagination from "../../Components/Pagination.vue";
 import CreateQuestionForm from "../../Components/Question/CreateQuestionForm.vue";
 import EditQuestionForm from "../../Components/Question/EditQuestionForm.vue";
 import QuestionFilter from '../../Components/Question/QuestionFilter.vue';
+import TagsList from '../../Components/Tags/TagsList.vue';
 import useModal from "../../Composables/useModal";
 
 const { showModal, hideModal, modalTitle, Modal } = useModal('#question-modal');
@@ -85,6 +76,10 @@ defineProps({
     tag: {
         type: Object,
         default: () => ({})
+    },
+    tags: {
+        type: Array,
+        required: true
     },
     filter: String
 })

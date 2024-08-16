@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Resources\QuestionResource;
+use App\Traits\RelatedTags;
 
 class TaggedQuestionController extends Controller
 {
+    use RelatedTags;
+
     /**
      * Handle the incoming request.
      */
@@ -21,10 +24,13 @@ class TaggedQuestionController extends Controller
                 ->paginate(15)
                 ->withQueryString()
         );
+
+        $tags = $this->relatedTags($questions->items(), [$tag->name]);
     
         return inertia('Questions/Index', [
             'questions' => $questions,
-            'tag' => $tag
+            'tags' => $tags,
+            'tag' => $tag,
         ]);
     }
 }
