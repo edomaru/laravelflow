@@ -5,8 +5,8 @@ import Author from '../../Components/Author.vue'
 import Answers from '../../Components/Answer/Answers.vue';
 import CreateAnswer from '../../Components/Answer/CreateAnswer.vue';
 import Votable from "../../Components/Votable.vue";
-import TagsInline from '../../Components/Tags/TagsInline.vue';
-import TagsList from '../../Components/Tags/TagsList.vue';
+import TagsInline from '../../Components/Tag/TagsInline.vue';
+import TagsList from '../../Components/Tag/TagsList.vue';
 import RelatedQuestions from '../../Components/Question/RelatedQuestions.vue';
 import useVote from '../../Composables/useVote.js';
 

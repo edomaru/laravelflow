@@ -63,7 +63,7 @@ import Pagination from "../../Components/Pagination.vue";
 import CreateQuestionForm from "../../Components/Question/CreateQuestionForm.vue";
 import EditQuestionForm from "../../Components/Question/EditQuestionForm.vue";
 import QuestionFilter from '../../Components/Question/QuestionFilter.vue';
-import TagsList from '../../Components/Tags/TagsList.vue';
+import TagsList from '../../Components/Tag/TagsList.vue';
 import useModal from "../../Composables/useModal";
 
 const { showModal, hideModal, modalTitle, Modal } = useModal('#question-modal');

@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { Link } from "@inertiajs/vue3";
 import ActionButtons from "../ActionButtons.vue";
-import TagsInline from '../../Components/Tags/TagsInline.vue';
+import TagsInline from '../../Components/Tag/TagsInline.vue';
 
 const props = defineProps({
     question: {
