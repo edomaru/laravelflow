@@ -24,3 +24,5 @@ Route::post('/questions/{question}/vote', VoteQuestionController::class)->name('
 Route::resource('/questions.answers', AnswerController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
 Route::post('/questions/answers/{answer}/accept', AcceptAnswerController::class)->name('questions.answers.accept')->middleware('auth');
 Route::post('/questions/answers/{answer}/vote', VoteAnswerController::class)->name('questions.answers.vote')->middleware('auth');
+
+Route::resource('/tags', TagController::class)->except(['index', 'show'])->middleware('auth');
