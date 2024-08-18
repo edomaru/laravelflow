@@ -71,6 +71,9 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->questions()->detach();
+        $tag->delete();
+
+        return back()->with('success', 'Tag deleted successfully.');
     }
 }

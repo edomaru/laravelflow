@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref } from "vue";
+import { router } from "@inertiajs/vue3";
 import AppLayout from '../../Layouts/AppLayout.vue';
 import TagCard from '../../Components/Tag/TagCard.vue';
 import Pagination from '../../Components/Pagination.vue';
@@ -41,6 +42,14 @@ const editTag = (data) => {
 
     showModal()
 }
+
+const removeTag = (data) => {
+    if (confirm("Are you sure?")) {
+        router.delete(route('tags.destroy', data.id), {
+            preserveScroll: true
+        })
+    }
+}
 </script>
 
 <template>
@@ -56,6 +65,7 @@ const editTag = (data) => {
                     :tag="tag" 
                     :key="tag.id" 
                     @edit="editTag"
+                    @remove="removeTag"
                 />
             </div>
             <Pagination :meta="tags.meta" position="right" />
