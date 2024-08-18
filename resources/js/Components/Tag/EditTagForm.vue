@@ -1,10 +1,10 @@
 <script setup>
-import QuestionForm from './QuestionForm.vue'
+import TagForm from './TagForm.vue'
 
 const emit = defineEmits(['success'])
 
 const props = defineProps({
-    question: {
+    tag: {
         type: Object,
         required: true
     }
@@ -12,9 +12,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <QuestionForm 
-        :question="question" 
-        :action="route('questions.update', question.id)" 
+    <TagForm 
+        :tag="tag" 
+        :action="route('tags.update', tag.id)" 
         @success="emit('success')" 
         method="PUT"
     />
