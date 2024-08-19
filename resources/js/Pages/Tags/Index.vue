@@ -14,7 +14,8 @@ defineProps({
     tags: {
         type: Object,
         required: true
-    }
+    },
+    can: Object
 })
 
 const { showModal, hideModal, modalTitle, Modal } = useModal('#tag-modal')
@@ -57,7 +58,7 @@ const removeTag = (data) => {
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="page-header">Tags</h1>
-                <button class="btn btn-success" @click="createTag">Add Tag</button>
+                <button class="btn btn-success" @click="createTag" v-if="can.create_tag">Add Tag</button>
             </div>
             <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
                 <TagCard 

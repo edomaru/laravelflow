@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
@@ -18,7 +19,10 @@ class TagController extends Controller
         $tags = Tag::withCount('questions')->orderBy('name')->paginate(15);
 
         return inertia('Tags/Index', [
-            'tags' => TagResource::collection($tags)
+            'tags' => TagResource::collection($tags),
+            'can' => [
+                'create_tag' => request()->user() && request()->user()->can('create', Tag::class)
+            ]
         ]);
     }
 
@@ -35,6 +39,8 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
+        Gate::authorize('create', Tag::class);
+        
         Tag::create($request->validated());
 
         return back()->with('success', 'New tag has been added successfully.');
@@ -61,6 +67,8 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
+        Gate::authorize('update', Tag::class);
+
         $tag->update($request->validated());
 
         return back()->with('success', 'Tag updated successfully.');
@@ -71,6 +79,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        Gate::authorize('delete', $tag);
+
         $tag->questions()->detach();
         $tag->delete();
 
