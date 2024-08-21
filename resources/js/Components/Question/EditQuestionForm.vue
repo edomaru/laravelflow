@@ -7,6 +7,10 @@ const props = defineProps({
     question: {
         type: Object,
         required: true
+    },
+    options: {
+        type: Array,
+        required: true
     }
 })
 </script>
@@ -14,6 +18,7 @@ const props = defineProps({
 <template>
     <QuestionForm 
         :question="question" 
+        :options="options"
         :action="route('questions.update', question.id)" 
         @success="emit('success')" 
         method="PUT"

@@ -23,7 +23,8 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:10|max:200',
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'tags' => 'required|array|min:1|max:5'
         ];
     }
 }

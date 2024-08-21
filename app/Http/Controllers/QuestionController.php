@@ -41,11 +41,13 @@ class QuestionController extends Controller
         );
 
         $tags = $this->relatedTags($questions->items());
-    
+        $tagOptions = Tag::pluck('name')->all();
+
         return inertia('Questions/Index', [
             'questions' => $questions,
             'filter' => $filter,
-            'tags' => $tags
+            'tags' => $tags,
+            'tag_options' => $tagOptions
         ]);
     }
 
@@ -62,9 +64,10 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request)
     {
-        $request->user()->questions()->create(
-            $request->validated()
+        $question = $request->user()->questions()->create(
+            $request->only(['title', 'body'])
         );
+        $question->tagged($request->tags);
 
         return back()->with('success', "Your question submitted successfully.");
     }
@@ -106,7 +109,8 @@ class QuestionController extends Controller
     {
         Gate::authorize('update', $question);
 
-        $question->update($request->validated());
+        $question->update($request->only(['title', 'body']));
+        $question->tagged($request->tags);
 
         return back()->with('success', 'Your question updated successfully.');
     }

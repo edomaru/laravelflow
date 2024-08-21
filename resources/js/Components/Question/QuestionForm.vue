@@ -1,4 +1,6 @@
 <script setup>
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css';
 import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -10,13 +12,18 @@ const props = defineProps({
     action: {
         type: String,
         required: true
+    },
+    options: {
+        type: Array,
+        required: true
     }
 })
 
 const formData = {
     title: props.question.title,
     body: props.question.body,
-    id: props.question.id
+    id: props.question.id,
+    tags: props.question.tags
 }
 
 if (props.method) {
@@ -47,7 +54,8 @@ const submit = () => {
             </div>
             <div class="col-5">
                 <label for="question-tags" class="form-label">Tags</label>
-                <input type="text" class="form-control" name="tags" id="question-tags">
+                <Multiselect id="question-tags" :class="{ 'is-invalid': form.errors.tags }" v-model="form.tags" multiple :options="options" />
+                <div class="invalid-feedback" v-if="form.errors.tags">{{ form.errors.tags }}</div>
             </div>
         </div>
         <div class="mb-3">

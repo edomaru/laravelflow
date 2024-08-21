@@ -35,10 +35,11 @@
                 </div>
             </div>
         </div>
-        <Modal id="question-modal" :title="modalTitle" size="large" scrollable @hidden="editing = false">
+        <Modal id="question-modal" :title="modalTitle" size="extra-large" scrollable @hidden="editing = false">
             <component 
                 :is="editing ? EditQuestionForm : CreateQuestionForm" 
                 :question="question" 
+                :options="tag_options"
                 @success="hideModal"
             />
         </Modal>
@@ -81,13 +82,18 @@ defineProps({
         type: Array,
         required: true
     },
+    tag_options: {
+        type: Array,
+        required: true
+    },
     filter: String
 })
 
 const question = reactive({
     id: null,
     title: null,
-    body: null
+    body: null,
+    tags: []
 })
 
 const editing = ref(false)
@@ -99,6 +105,7 @@ const editQuestion = (payload) => {
     question.id = payload.id
     question.title = payload.title
     question.body = payload.body
+    question.tags = payload.tags
 
     showModal()
 }

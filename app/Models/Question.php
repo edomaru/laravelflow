@@ -53,6 +53,13 @@ class Question extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function tagged(array $tags)
+    {
+        $tags = Tag::whereIn('name', $tags)->pluck('id')->all();
+
+        $this->tags()->sync($tags);
+    }
+
     public function bookmarkedBy(?User $user): bool
     {
         if (!$user) {
