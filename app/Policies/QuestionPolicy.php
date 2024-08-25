@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Question;
+use App\Enums\Role;
 use App\Models\User;
+use App\Models\Question;
 
 class QuestionPolicy
 {
@@ -17,7 +18,7 @@ class QuestionPolicy
 
     public function update(User $user, Question $question): bool
     {
-        return $user->id === $question->user_id;
+        return $user->id === $question->user_id || (in_array($user->role, [Role::ADMIN, Role::EDITOR]));
     }
     
     public function delete(User $user, Question $question): bool

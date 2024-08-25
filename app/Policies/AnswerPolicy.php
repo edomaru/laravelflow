@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Answer;
+use App\Enums\Role;
 use App\Models\User;
+use App\Models\Answer;
 
 class AnswerPolicy
 {
@@ -17,12 +18,12 @@ class AnswerPolicy
 
     public function update(User $user, Answer $answer): bool
     {
-        return $user->id === $answer->user_id;
+        return $user->id === $answer->user_id || in_array($user->role, [Role::ADMIN, Role::EDITOR]);
     }
     
     public function delete(User $user, Answer $answer): bool
     {
-        return $user->id === $answer->user_id;
+        return $user->id === $answer->user_id || $user->role === Role::ADMIN;
     }
     
     public function accept(User $user, Answer $answer): bool

@@ -22,6 +22,7 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
+        // sleep(3); # simulate long request to show progress indicator
         $filter = $request->query('filter', 'latest');
         $questions = QuestionResource::collection(
             Question::with('user')
